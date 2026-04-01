@@ -5,8 +5,9 @@ help: ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST)  | fgrep -v fgrep | sed -e 's/:.*##/:##/' | awk -F':##' '{printf "%-12s %s\n",$$1, $$2}'
 
 .PHONY: lint
-lint: ## Run golangci-lint.
-	golangci-lint run ./...
+lint: ## Run golangci-lint for all OS targets.
+	GOOS=linux golangci-lint run ./...
+	GOOS=darwin golangci-lint run ./...
 
 .PHONY: test
 test: ## Run tests.

@@ -56,11 +56,11 @@ func notifySignals(ch chan<- os.Signal) {
 }
 
 func tcget(t *termState) error {
-	_, _, errno := syscall.Syscall( //nolint:gosec // intentional syscall usage requires unsafe pointer and int->uintptr
+	_, _, errno := syscall.Syscall(
 		syscall.SYS_IOCTL,
-		uintptr(syscall.Stdin),
+		uintptr(syscall.Stdin),  //nolint:gosec // int->uintptr required for syscall
 		uintptr(tcgets),
-		uintptr(unsafe.Pointer(t)),
+		uintptr(unsafe.Pointer(t)), //nolint:gosec // unsafe pointer required for ioctl
 	)
 	if errno != 0 {
 		return errno
@@ -69,11 +69,11 @@ func tcget(t *termState) error {
 }
 
 func tcset(t *termState) error {
-	_, _, errno := syscall.Syscall( //nolint:gosec // intentional syscall usage requires unsafe pointer and int->uintptr
+	_, _, errno := syscall.Syscall(
 		syscall.SYS_IOCTL,
-		uintptr(syscall.Stdin),
+		uintptr(syscall.Stdin),  //nolint:gosec // int->uintptr required for syscall
 		uintptr(tcsets),
-		uintptr(unsafe.Pointer(t)),
+		uintptr(unsafe.Pointer(t)), //nolint:gosec // unsafe pointer required for ioctl
 	)
 	if errno != 0 {
 		return errno
