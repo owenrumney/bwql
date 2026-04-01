@@ -43,7 +43,7 @@ func enableRawMode() (*termState, error) {
 }
 
 func restoreMode(orig *termState) {
-	tcset(orig)
+	_ = tcset(orig)
 }
 
 func isTerminal() bool {
@@ -56,7 +56,7 @@ func notifySignals(ch chan<- os.Signal) {
 }
 
 func tcget(t *termState) error {
-	_, _, errno := syscall.Syscall(
+	_, _, errno := syscall.Syscall( //nolint:gosec // intentional syscall usage requires unsafe pointer and int->uintptr
 		syscall.SYS_IOCTL,
 		uintptr(syscall.Stdin),
 		uintptr(tcgets),
@@ -69,7 +69,7 @@ func tcget(t *termState) error {
 }
 
 func tcset(t *termState) error {
-	_, _, errno := syscall.Syscall(
+	_, _, errno := syscall.Syscall( //nolint:gosec // intentional syscall usage requires unsafe pointer and int->uintptr
 		syscall.SYS_IOCTL,
 		uintptr(syscall.Stdin),
 		uintptr(tcsets),
