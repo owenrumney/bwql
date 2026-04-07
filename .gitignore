@@ -1,5 +1,4 @@
 demo/bwql
-demo.tape
 dist/
-bin/
-bwql
+demo.tape
+
